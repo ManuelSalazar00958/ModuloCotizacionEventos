@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EventosCreateDlg" widgetVar="EventosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEventosTitle}">
+            <h:form id="EventosCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{eventosController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateEventosLabel_idEventos}" for="idEventos" />
+                        <p:inputText id="idEventos" value="#{eventosController.selected.idEventos}" title="#{bundle.CreateEventosTitle_idEventos}" required="true" requiredMessage="#{bundle.CreateEventosRequiredMessage_idEventos}"/>
+                        <p:outputLabel value="#{bundle.CreateEventosLabel_tipoEvento}" for="tipoEvento" />
+                        <p:inputText id="tipoEvento" value="#{eventosController.selected.tipoEvento}" title="#{bundle.CreateEventosTitle_tipoEvento}" />
+                        <p:outputLabel value="#{bundle.CreateEventosLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{eventosController.selected.descripcion}" title="#{bundle.CreateEventosTitle_descripcion}" required="true" requiredMessage="#{bundle.CreateEventosRequiredMessage_descripcion}"/>
+                        <p:outputLabel value="#{bundle.CreateEventosLabel_lugarid}" for="lugarid" />
+                        <p:selectOneMenu id="lugarid" value="#{eventosController.selected.lugarid}" required="true" requiredMessage="#{bundle.EditEventosRequiredMessage_lugarid}">
+                            <f:selectItems value="#{lugarController.itemsAvailableSelectOne}"
+                                           var="lugaridItem"
+                                           itemValue="#{lugaridItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateEventosLabel_portafolioid}" for="portafolioid" />
+                        <p:selectOneMenu id="portafolioid" value="#{eventosController.selected.portafolioid}" required="true" requiredMessage="#{bundle.EditEventosRequiredMessage_portafolioid}">
+                            <f:selectItems value="#{portafolioController.itemsAvailableSelectOne}"
+                                           var="portafolioidItem"
+                                           itemValue="#{portafolioidItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{eventosController.create}" value="#{bundle.Save}" update="display,:EventosListForm:datalist,:growl" oncomplete="handleSubmit(args,'EventosCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EventosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

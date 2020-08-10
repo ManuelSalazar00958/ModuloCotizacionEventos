@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PortafolioCreateDlg" widgetVar="PortafolioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePortafolioTitle}">
+            <h:form id="PortafolioCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{portafolioController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePortafolioLabel_idPortafolio}" for="idPortafolio" />
+                        <p:inputText id="idPortafolio" value="#{portafolioController.selected.idPortafolio}" title="#{bundle.CreatePortafolioTitle_idPortafolio}" required="true" requiredMessage="#{bundle.CreatePortafolioRequiredMessage_idPortafolio}"/>
+                        <p:outputLabel value="#{bundle.CreatePortafolioLabel_servicosid}" for="servicosid" />
+                        <p:selectOneMenu id="servicosid" value="#{portafolioController.selected.servicosid}" required="true" requiredMessage="#{bundle.EditPortafolioRequiredMessage_servicosid}">
+                            <f:selectItems value="#{serviciosController.itemsAvailableSelectOne}"
+                                           var="servicosidItem"
+                                           itemValue="#{servicosidItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePortafolioLabel_stockid}" for="stockid" />
+                        <p:selectOneMenu id="stockid" value="#{portafolioController.selected.stockid}" required="true" requiredMessage="#{bundle.EditPortafolioRequiredMessage_stockid}">
+                            <f:selectItems value="#{stockController.itemsAvailableSelectOne}"
+                                           var="stockidItem"
+                                           itemValue="#{stockidItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{portafolioController.create}" value="#{bundle.Save}" update="display,:PortafolioListForm:datalist,:growl" oncomplete="handleSubmit(args,'PortafolioCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PortafolioCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
